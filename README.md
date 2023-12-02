@@ -99,3 +99,14 @@ public Libros guardarLibrosConPublicacion(Libros libros, Long id_publicacion){
             return null; // O lanzar una excepción
         }
     }
+
+leer el id:
+#
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      const id_publicacion = params.get('id_publicacion');
+      if (id_publicacion !== null) {
+        this.id_publicacion = +id_publicacion;
+      }
+    });
+  }
