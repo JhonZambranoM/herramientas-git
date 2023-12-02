@@ -75,3 +75,27 @@ public Libros guardarLibrosConPublicacion(Libros libros, Long id_publicacion){
             <artifactId>openpdf</artifactId>
             <version>1.3.33</version>
         </dependency>
+
+
+#actualizar:
+ @PutMapping("/actualizar/{id_libro}")
+    public Libros actualizar(@RequestBody Libros libros,
+                             @PathVariable Long id_libro) {
+        // Verificamos si está presente
+        Libros existe = libroServicio.encontrarPorId(id_libro);
+        if (existe != null) {
+            // Actualizamos las propiedades del libro existente
+            existe.setTitulo(libros.getTitulo());
+            existe.setIsbn(libros.getIsbn());
+            existe.setAnio_pub(libros.getAnio_pub());
+            existe.setNum_pages(libros.getNum_pages());
+            existe.setFecha_modificacion(existe.getFecha_modificacion());
+
+            // Guardamos los cambios en el libro existente
+            return libroServicio.guardarLibros(existe);
+        } else {
+            // Manejo de error o lanzar una excepción si el libro no existe
+            // Puedes personalizar este comportamiento según tus necesidades
+            return null; // O lanzar una excepción
+        }
+    }
