@@ -110,3 +110,14 @@ leer el id:
       }
     });
   }
+de uno a muchos 
+   @JsonIgnore
+    @OneToMany(mappedBy = "publicacion")
+    private List<Libros> libros;
+
+de muchos a unos:
+ @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_publicacion", referencedColumnName = "id_publicacion")
+    private Publicacion publicacion;
+
