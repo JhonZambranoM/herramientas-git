@@ -121,3 +121,41 @@ de muchos a unos:
     @JoinColumn(name = "id_publicacion", referencedColumnName = "id_publicacion")
     private Publicacion publicacion;
 
+<h1>Traer con relaciones</h1>
+<div>
+
+	public LibroConPublicacionDTO(Libros libros, Publicacion publicacion){
+        //mapear con todos
+        this.id_libro = libros.getId_libro();
+        this.ibsn = libros.getIbsn();
+        this.titulo = libros.getTitulo();
+        this.total_pages = libros.getTotal_pages();
+        this.publication_year = libros.getPublication_year();
+        this.fecha_creacion = libros.getFecha_creacion();
+        this.fecha_modificacion = libros.getFecha_modificacion();
+        if(publicacion !=null){
+            this.id_publicacion = publicacion.getId_publicacion();
+            this.nombre = publicacion.getNombre();
+            this.fecha_creacion_publicacion = publicacion.getFecha_creacion();
+            this.fecha_modificacion_publicacion = publicacion.getFecha_modificacion();
+
+        }
+
+    }
+
+    <hr>
+    <div>
+        public List<LibroConPublicacionDTO> obtenerLibrosConPublicacion() {
+        List<Libros> libros = librosRepo.findAll();
+        return libros.stream()
+                .map(libro -> new LibroConPublicacionDTO(libro, libro.getPublicacion()))
+                .collect(Collectors.toList());
+    }
+    </div>
+     @GetMapping("/libros-con-publicacion")
+    public List<LibroConPublicacionDTO> obtenerLibrosConPublicacion() {
+        return service.obtenerLibrosConPublicacion();
+    }
+    
+</div>
+
